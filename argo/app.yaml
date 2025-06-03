@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: exampleapp
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: exampleapp
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    directory:
+      recurse: true
+    path: app
+    repoURL: https://github.com/kenhitchcock/openshift-gitops-configmanagement.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
